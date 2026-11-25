@@ -1,0 +1,169 @@
+@import "tailwindcss";
+
+:root {
+  --bg-base: #000000;
+  --bg-card: #111111;
+  --bg-elevated: #1a1a1a;
+  --bg-input: #111111;
+  --border: rgba(255, 255, 255, 0.06);
+  --border-hover: rgba(255, 255, 255, 0.12);
+  --text-primary: #ffffff;
+  --text-secondary: #777777;
+  --text-muted: #444444;
+
+  /* Financial colors */
+  --green: #22c55e;
+  --green-dim: rgba(34, 197, 94, 0.1);
+  --green-border: rgba(34, 197, 94, 0.25);
+  --red: #ef4444;
+  --red-dim: rgba(239, 68, 68, 0.1);
+  --red-border: rgba(239, 68, 68, 0.25);
+
+  /* Backwards compat aliases */
+  --bg-primary: var(--bg-base);
+  --bg-secondary: var(--bg-card);
+  --bg-hover: var(--bg-elevated);
+  --orange: var(--red);
+  --orange-dim: var(--red-dim);
+  --orange-border: var(--red-border);
+  --border-light: var(--border-hover);
+
+  --radius-card: 20px;
+  --radius-btn: 999px;
+  --radius-sm: 10px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: #000;
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar { width: 3px; height: 3px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #222; border-radius: 2px; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes scrollTicker {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.3; }
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.animate-fadeIn { animation: fadeIn 0.2s ease forwards; }
+.price-up  { color: var(--green); }
+.price-down { color: var(--red); }
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+}
+.card-hover {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  transition: border-color 0.15s;
+  cursor: pointer;
+}
+.card-hover:hover { border-color: var(--border-hover); }
+
+.input-dark {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  border-radius: var(--radius-btn);
+  padding: 9px 16px;
+  width: 100%;
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.input-dark:focus { border-color: var(--border-hover); }
+.input-dark::placeholder { color: var(--text-muted); }
+
+.btn-primary {
+  background: var(--green);
+  color: #000;
+  border: none;
+  border-radius: var(--radius-btn);
+  padding: 9px 20px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.btn-primary:hover   { opacity: 0.88; }
+.btn-primary:disabled { opacity: 0.3; cursor: not-allowed; }
+
+.btn-ghost {
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-btn);
+  padding: 7px 16px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-ghost:hover { color: var(--text-primary); border-color: var(--border-hover); }
+
+.btn-icon {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: none;
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  font-size: 15px;
+  transition: all 0.15s;
+}
+.btn-icon:hover { background: #222; color: var(--text-primary); }
+
+.tag {
+  font-size: 9px;
+  padding: 2px 7px;
+  border-radius: var(--radius-btn);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+.section-label {
+  font-size: 10px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+}
+
+/* Live price tick flash (components/ui/FlashPrice.tsx) */
+@keyframes flashUp {
+  from { background: rgba(34, 197, 94, 0.35); }
+  to   { background: transparent; }
+}
+@keyframes flashDown {
+  from { background: rgba(239, 68, 68, 0.35); }
+  to   { background: transparent; }
+}
+.flash-up, .flash-down { border-radius: 4px; padding: 0 3px; margin: 0 -3px; }
+.flash-up   { animation: flashUp 1.2s ease-out; }
+.flash-down { animation: flashDown 1.2s ease-out; }
+@media (prefers-reduced-motion: reduce) {
+  .flash-up, .flash-down { animation: none; }
+}
